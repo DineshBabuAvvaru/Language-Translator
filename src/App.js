@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import translations from "./Components/Translations";
+import LanguageSelector from "./Components/LanguageSelector";
+import Greetings from "./Components/Greetings";
 
 function App() {
+  const [currentLanguage, setCurrentLanguage] = useState("English");
+  const [selectedTranslation, setSelectedTranslation] = useState(
+    translations[currentLanguage]
+  );
+
+  const changeLanguage = (newLanguage) => {
+    setCurrentLanguage(newLanguage);
+    setSelectedTranslation(translations[newLanguage]);
+  };
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Language Translation Example</h1>
+      <LanguageSelector
+        languages={Object.keys(translations)}
+        currentLanguage={currentLanguage}
+        onLanguageChange={changeLanguage}
+        
+      />
+      <Greetings translation={selectedTranslation} />
     </div>
   );
 }
